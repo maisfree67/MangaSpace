@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaSpace</title>
+</head>
+<body>
+
+<header>
+    <div class="logo">MangaSpace</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/E1">Explorar</a>
+        <a href="">Favoritos</a>
+        <a href="/L1">Login</a>
+    </nav>
+</header>
+<section class="manga-page">
+    <div class="manga-info">
+
+        <!-- CAPA -->
+        <img id="capa" src="" alt="Capa do mangá">
+
+        <!-- INFO -->
+        <div class="manga-text">
+            <h1 id="titulo">Carregando...</h1>
+            <p><strong>Gênero:</strong> <span id="genero">Carregando...</span></p></br>
+            <p><strong>Descrição:</strong> <span id="descricao">Carregando...</span></p></br>
+            <p><strong>Capítulos:</strong> <span id="capitulo">Carregando...</span></p></br>
+        </div>
+
+        <!-- 📖 LISTA DE CAPÍTULOS -->
+        <div class="manga-capitulos">
+            <h3>Capítulos</h3>
+            <ul id="lista-capitulos">
+                <li>Carregando...</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<script>
+     
+
+    var lc = window.location.href
+    var id = lc.split("/")[4]
+    console.log(id)
+    async function Pega(na) {
+        
+        var busca = await fetch(`/api/manga?id=${na}`)
+        var tabela =  await busca.json()
+        var nome = tabela[0].titulo
+        console.log(nome)
+        var capa = tabela[0].capa
+        console.log(capa)
+        document.title = `${nome}`
+        document.getElementById("capa").src = `/static/Upload/${capa}`
+        document.getElementById("titulo").innerText = nome
+        document.getElementById("genero").innerText = tabela[0].genero
+        document.getElementById("descricao").innerText = tabela[0].descricao
+        document.getElementById("capitulo").innerText = tabela[0].capitulo
+
+    }
+   Pega(id)
+</script>  
+</body>
+</html>

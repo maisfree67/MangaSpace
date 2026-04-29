@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MangaSpace</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">MangaSpace</div>
+   <nav>
+        <a href="/">Home</a>
+        <a href="/E1">Explorar</a>
+        <a href="">Favoritos</a>
+        <a href="/L1">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Descubra novos mangás</h1>
+    <p>Leia, explore e mergulhe em histórias incríveis</p>
+</section>
+
+<div class="container">
+
+    {% for m in mangas %}
+        <div class="card">
+          <img src="{{ m.capa }}">
+            <div class="card-content">
+               <h3>{{ m.titulo }}</h3>
+                <p>{{ m.genero }}</p>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- 🔥 AÇÃO -->
+    <h2 class="genre-title" >🔥 Ação</h2>
+    <div class="manga-grid" id="mangaGrid">
+
+        <div class="card">
+            <img src="https://via.placeholder.com/200x300">
+            <div class="card-content">
+                <h3>Chainsaw Man</h3>
+                <p>Ação • Sobrenatural</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="https://via.placeholder.com/200x300">
+            <div class="card-content">
+                <h3>Jujutsu Kaisen</h3>
+                <p>Ação • Fantasia</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 😢 DRAMA -->
+    <h2 class="genre-title">😢 Drama</h2>
+    <div class="manga-grid">
+
+        <div class="card" onclick="window.location.href='/manga/1'">
+            <img src="https://via.placeholder.com/200x300">
+            <div class="card-content">
+                <h3>Tokyo Revengers</h3>
+                <p>Drama • Gangues</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🎮 RPG -->
+    <h2 class="genre-title">🎮 RPG</h2>
+    <div class="manga-grid">
+
+        <div class="card">
+            <img src="https://via.placeholder.com/200x300">
+            <div class="card-content">
+                <h3>Solo Leveling</h3>
+                <p>Ação • RPG</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    © 2026 MangaSpace — feito por você
+</footer>
+
+</body><script>
+    function Carregar(man){
+        var bloco = document.getElementById("mangaGrid")
+        var mangas = man.slice(0, 20)
+        var html = ""
+        mangas.forEach(manga => {
+            html += `<div class="card" data-title="naruto" data-genre="acao">
+            <img src="/static/Upload/${manga.capa}">
+            <div class="card-content">
+                <h3>${manga.titulo}</h3>
+                <p>${manga.genero}</p>
+            </div>
+            </div>` 
+        });
+
+    
+        bloco.innerHTML = html
+    }
+    document.addEventListener("DOMContentLoaded", async function () {
+    const res = await fetch("/api/manga?genero=drama");
+    const data = await res.json();
+    if (data.genero == "drama"){
+        Carregar(data);
+    }
+    
+});
+</script>
+</html>

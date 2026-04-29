@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore - MangáHub</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="logo">MangáSpace</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/E1">Explorar</a>
+        <a href="">Favoritos</a>
+        <a href="/L1">Login</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Explorar Mangás 🔥</h1>
+    <p>Encontre seus mangás favoritos rapidamente</p>
+</section>
+
+<!-- BUSCA + FILTROS -->
+<div class="container" id="bloco">
+
+    <div style="margin-bottom: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+
+        <!-- BUSCA -->
+        <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Buscar mangá..."
+            style="flex:1; padding:12px; border-radius:6px; border:none; background:#1f1f1f; color:#eee;"
+        >
+
+        <!-- FILTRO -->
+        <select id="genreFilter" style="padding:12px; border-radius:6px; border:none; background:#1f1f1f; color:#eee;">
+            <option value="all">Todos</option>
+            <option value="acao">Ação</option>
+            <option value="romance">Romance</option>
+            <option value="fantasia">Fantasia</option>
+            <option value="Drama">Fantasia</option>
+        </select>
+
+    </div>
+
+    <!-- GRID -->
+    <div class="manga-grid" id="mangaGrid">
+
+        <!-- CARD -->
+        <div class="card" data-title="naruto" data-genre="acao">
+            <img src="/static/Upload/">
+            <div class="card-content">
+                <h3>Naruto</h3>
+                <p>Ação • Ninja</p>
+            </div>
+        </div>
+        
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+     © 2026 MangaSpace - Todos os direitos reservados
+</footer>
+<script>
+function Carregar(man){
+     var bloco = document.getElementById("mangaGrid")
+        var mangas = man.slice(0, 20)
+        var html = ""
+        mangas.forEach(manga => {
+            html += `<div class="card" data-title="naruto" data-genre="acao" onclick="window.location.href='/manga/${manga.id}'">
+            <img src="/static/Upload/${manga.capa}">
+            <div class="card-content">
+                <h3>${manga.titulo}</h3>
+                <p>${manga.genero}</p>
+            </div>
+            </div>` 
+        });
+        
+        bloco.innerHTML = html
+    }
+
+    async function CarregarManga(){
+        var busca = await fetch("http://127.0.0.1:5000/api/manga")
+        var data = await busca.json()
+        Carregar(data)
+    }
+    document.getElementById("searchInput").addEventListener("input", async (e) =>  {
+        const q = e.target.value;
+
+        const res = await fetch(`/api/manga?q=${q}`);
+        const data = await res.json();
+
+        Carregar(data);
+    })
+    
+    document.getElementById("genreFilter").addEventListener("input", async (e) =>  {
+        const q = e.target.value;
+
+        const res = await fetch(`/api/manga?genero=${q}`);
+        const data = await res.json();
+
+        Carregar(data);
+    })
+    CarregarManga()
+</script>
+</body>
+</html>

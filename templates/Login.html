@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login / Registro</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">MangaSpace</div>
+    <nav>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/E1">Explorar</a>
+        <a href="">Favoritos</a>
+        <a href="/L1">Login</a>
+    </nav>
+</header>
+   {% if erro %}
+    <div class="alert-error">
+        {{ erro }}
+    </div>
+    {% endif %}
+<div class="auth-container">
+
+    <!-- LOGIN -->
+    <div class="auth-box" id="loginBox">
+        <form action="/LD1" method="post">
+        <h2>Login</h2>
+
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="senha" placeholder="Senha">
+        <button>Entrar</button>
+        </form>
+        <p>Não tem conta?
+            <a href="#" onclick="showRegister()">Criar conta</a>
+        </p>
+    </div>
+
+    <!-- REGISTRO -->
+    <div class="auth-box" id="registerBox" style="display:none;">
+        <form action="/RD1" method="post">
+        <h2>Registro</h2>
+
+        <input type="text" name="nome" placeholder="Nome">
+        <input type="email" name="email" placeholder="Email">
+        <input type="password" name="senha" placeholder="Senha">
+        <button>Registrar</button>
+        </form>
+        <p>Já tem conta?
+            <a href="#" onclick="showLogin()">Fazer login</a>
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 MangaSpace - Todos os direitos reservados
+</footer>
+
+</body>
+</html>
+<script>
+function showRegister() {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("registerBox").style.display = "block";
+}
+
+function showLogin() {
+    document.getElementById("loginBox").style.display = "block";
+    document.getElementById("registerBox").style.display = "none";
+}
+
+setTimeout(() => {
+    const toast = document.getElementById("toast");
+    if (toast) {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(120%)";
+
+        setTimeout(() => {
+            toast.style.display = "none";
+        }, 500);
+    }
+}, 15000); // 30 segundos
+
+</script>

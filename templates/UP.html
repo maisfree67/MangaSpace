@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Adicionar Mangá</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Adicionar Mangá</div>
+</header>
+
+<div class="auth-container">
+
+    <div class="auth-box">
+
+        <h2>Novo Mangá</h2>
+
+        <form action="/add_manga" method="post" enctype="multipart/form-data">
+
+            <input type="text" name="titulo" placeholder="Título" required>
+
+            <input type="text" name="descricao" placeholder="Descrição" required>
+
+            <input type="file" name="capa" placeholder="URL da capa" required>
+
+            <input type="text" name="genero" placeholder="Gênero (Ação, Drama...)" required>
+
+            <input type="number" name="capitulos" placeholder="Número de capítulos" required>
+
+            <button type="submit">Salvar Mangá</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<footer>
+     © 2026 MangaSpace - Todos os direitos reservados
+</footer>
+
+</body>
+</html>
