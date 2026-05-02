@@ -4,7 +4,12 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def index():
-    return render_template("index.html")
+    # Busca os mangás filtrando pelo campo 'genero' definido no model
+    acao = manga.query.filter_by(genero='Ação').limit(6).all()
+    drama = manga.query.filter_by(genero='Drama').limit(6).all()
+    rpg = manga.query.filter_by(genero='RPG').limit(6).all()
+
+    return render_template("index.html", acao=acao, drama=drama, rpg=rpg)
 @main.route("/E1")
 def explorar():
     return render_template("explora.html")
