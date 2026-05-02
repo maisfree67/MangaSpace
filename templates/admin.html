@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - MangáSpace</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">MangáSpace ADM</div>
+
+    <nav>
+        <a href="/">Site</a>
+        <a href="/logout">Sair</a>
+    </nav>
+</header>
+
+<div class="admin-container">
+
+    <aside class="admin-sidebar">
+        <h3>Painel</h3>
+
+        <a href="#">Dashboard</a>
+        <a href="#">Usuários</a>
+        <a href="#">Mangás</a>
+        <a href="#">Categorias</a>
+        <a href="#">Relatórios</a>
+    </aside>
+
+    <main class="admin-content">
+
+        <div class="admin-card">
+            <h2>Dashboard</h2>
+            <p>Total de usuários: 120</p>
+            <p>Mangás cadastrados: 45</p>
+        </div>
+
+        <div class="admin-card">
+            <h2>Usuários recentes</h2>
+
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    </tr>
+                </thead>
+
+    <tbody id="admin-table"></tbody>
+</table>
+</table>
+
+</div>
+<script>
+    function Carregar(Usua){
+     var bloco = document.getElementById("admin-table")
+        var conta = Usua.slice(0, 20)
+        var html = ""
+        conta.forEach(Usu => {
+            html += `<tr>
+                    <td>${Usu.id}</td>
+                    <td>${Usu.nome}</td>
+                    <td>${Usu.email}</td>
+                </tr>` 
+        });
+        
+        bloco.innerHTML = html
+    }
+    async function CarregarUsuario(){
+        var busca = await fetch("http://127.0.0.1:5000/api/user")
+        var data = await busca.json()
+        Carregar(data)
+    }
+    CarregarUsuario()
+</script>
+</body>
+</html>
